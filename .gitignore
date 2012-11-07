@@ -3,3 +3,4 @@ target/
 project/project/
 *.out
 *.jar
+resources/
