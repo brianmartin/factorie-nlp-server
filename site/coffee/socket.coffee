@@ -84,7 +84,6 @@ getTokenPositions = (sentenceId) ->
   positions
 
 handleMsg = (data) ->
-  #print "handling message"
   jsonStr = JSON.stringify(JSON.parse(data))
   what = JSON.parse(data)
   tokenRow = '<tr><td><span class="token">' + (what.tokens.join ' </span></td> <td><span class="token">') + '</span></td></tr>'
