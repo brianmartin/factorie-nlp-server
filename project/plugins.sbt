@@ -10,3 +10,5 @@ resolvers += Resolver.url(
 )(Resolver.ivyStylePatterns)
 
 addSbtPlugin("com.github.retronym" % "sbt-onejar" % "0.7")
+
+addSbtPlugin("me.lessis" % "coffeescripted-sbt" % "0.2.1")
