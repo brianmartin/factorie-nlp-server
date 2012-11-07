@@ -114,9 +114,9 @@ debug = (msg) -> jq("#debug").html(msg)
 
 send = (msg) ->
   client = new XMLHttpRequest()
-  client.open("GET", host + '/sample', false)
+  client.open("POST", host + '/sentence/', false)
   client.setRequestHeader("Content-Type", "text/plain")
-  client.send('')
+  client.send(msg)
   if (client.status == 200)
     handleMsg(client.responseText)
   else

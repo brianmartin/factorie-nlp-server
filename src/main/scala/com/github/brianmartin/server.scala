@@ -41,25 +41,31 @@ object RestServer extends Logger {
 
   import RestUtils._
 
-  val posMatcher: PartialFunction[(HttpMethod, Path), Future[Response]] = {
-    case GET -> Root / "sample" => Future.value {
+  val posMatcher: PartialFunction[(Request, (HttpMethod, Path)), Future[Response]] = {
+    case (request, GET -> Root / "sample") => Future.value {
       val data = Factorie.sampleSentence()
+      debug("data: %s" format data)
+      constructJSONResponse(data)
+    }
+    case (request, POST -> Root / "sentence") => Future.value {
+      // TODO: handle process returning multiple sentences
+      val data = Factorie.process(request.contentString).head
       debug("data: %s" format data)
       constructJSONResponse(data)
     }
   }
 
-  val notFoundMatcher: PartialFunction[(HttpMethod, Path), Future[Response]] = {
+  val notFoundMatcher: PartialFunction[(Request, (HttpMethod, Path)), Future[Response]] = {
     case _ => Future value Response(Http11, NotFound)
   }
 
-  class Respond(fns: PartialFunction[(HttpMethod, Path), Future[Response]]*) extends Service[Request, Response] with Logger {
+  class Respond(fns: PartialFunction[(Request, (HttpMethod, Path)), Future[Response]]*) extends Service[Request, Response] with Logger {
 
     val matches = fns.drop(1).foldLeft(fns.head)(_ orElse _)
 
     def apply(request: Request) = {
       try {
-        matches(request.method -> Path(request.path))
+        matches((request, request.method -> Path(request.path)))
       } catch {
         case e: NoSuchElement => Future value Response(Http11, NotFound)
         case e: Exception => Future.value {

@@ -142,9 +142,9 @@
   send = function(msg) {
     var client;
     client = new XMLHttpRequest();
-    client.open("GET", host + '/sample', false);
+    client.open("POST", host + '/sentence/', false);
     client.setRequestHeader("Content-Type", "text/plain");
-    client.send('');
+    client.send(msg);
     if (client.status === 200) {
       return handleMsg(client.responseText);
     } else {
