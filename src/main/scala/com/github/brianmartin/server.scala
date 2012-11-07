@@ -24,6 +24,7 @@ object RestUtils {
       val response = Response()
       response.setContentTypeJson
       response.content = copiedBuffer(json, UTF_8)
+      response.addHeader("Access-Control-Allow-Origin", "*")
       response
     }
 
@@ -41,16 +42,8 @@ object RestServer extends Logger {
   import RestUtils._
 
   val posMatcher: PartialFunction[(HttpMethod, Path), Future[Response]] = {
-    case GET -> Root / "pos" => Future.value {
-      val data = getJSON("hello")
-      debug("data: %s" format data)
-      constructJSONResponse(data)
-    }
-  }
-
-  val todosMatcher: PartialFunction[(HttpMethod, Path), Future[Response]] = {
-    case GET -> Root / "todos" => Future.value {
-      val data = getJSON("hello")
+    case GET -> Root / "sample" => Future.value {
+      val data = Factorie.sampleSentence()
       debug("data: %s" format data)
       constructJSONResponse(data)
     }
@@ -81,7 +74,7 @@ object RestServer extends Logger {
 
   def main(args: Array[String]) {
 
-    val service = new Respond(posMatcher, todosMatcher, notFoundMatcher)
+    val service = new Respond(posMatcher, notFoundMatcher)
     val port    = 8888
     val server  = ServerBuilder()
       .codec(RichHttp[Request](Http()))

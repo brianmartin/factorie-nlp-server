@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Dependency Parsing Demo</title>
+    <style type="text/css">
+      body { font-size: 24px; font-family:helvetica, sans serif; padding:1em; color:#333; }
+      input[type='text'] { font-size:32px; }
+      ul { list-style:none; }
+      table { margin:auto; }
+      td { text-align:center; }
+      .token { background-color:#E6E6E6; }
+      .pos { background-color: #E6E6E6; font-size: 18px; font-style: italic; }
+    </style>
+    <script text="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.4.2/jquery.min.js"></script>
+    <script type="text/javascript" src="js/jquery.jqtransform.js"></script>
+    <script text="text/javascript" src="js/raphael.js"></script>
+  </head>
+  <body>
+    <div align="center">
+      <form id="frm">
+        <input size="75" type="text" name="message" id="message" placeholder="Enter a sentence here.." />
+      </form>
+    </div>
+    <br>
+    <br>
+    <ul></ul>
+    <div id="holder"></div>
+    <script text="text/javascript" src="js/socket.js"></script>
+  </body>
+</html>
