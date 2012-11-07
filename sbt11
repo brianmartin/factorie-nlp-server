@@ -1,0 +1,9 @@
+#!/bin/sh
+test -f ~/.sbtconfig && . ~/.sbtconfig
+
+if [ ! -e ./sbt-launch.jar ]
+then
+    wget http://repo.typesafe.com/typesafe/ivy-releases/org.scala-tools.sbt/sbt-launch/0.11.2/sbt-launch.jar
+fi
+
+exec java -Xmx512M ${SBT_OPTS} -jar ./sbt-launch.jar "$@"
