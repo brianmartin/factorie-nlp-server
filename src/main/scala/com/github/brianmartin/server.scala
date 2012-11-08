@@ -49,9 +49,16 @@ object RestServer extends Logger {
     }
     case (request, POST -> Root / "sentence") => Future.value {
       // TODO: handle process returning multiple sentences
-      val data = Factorie.process(request.contentString).head
-      debug("data: %s" format data)
-      constructJSONResponse(data)
+      if (request.contentString.isEmpty) {
+        val data = Factorie.sampleSentence()
+        debug("data: %s" format data)
+        constructJSONResponse(Factorie.sampleSentence())
+      }
+      else {
+        val data = Factorie.process(request.contentString).head
+        debug("data: %s" format data)
+        constructJSONResponse(data)
+      }
     }
   }
 
