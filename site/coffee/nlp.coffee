@@ -88,7 +88,7 @@ handleMsg = (data) ->
   what = JSON.parse(data)
   tokenRow = '<tr><td><span class="token">' + (what.tokens.join ' </span></td> <td><span class="token">') + '</span></td></tr>'
   posRow = '<tr><td><span class="pos">' + (what.pos.join ' </span></td> <td><span class="pos">') + '</span></td></tr>'
-  jq('ul:first').prepend('<li><div id="sentence'+numSentences+'"><br><table cellspacing="5">' + tokenRow + posRow + '</table></div></li>')
+  jq('#sent_list:first').prepend('<li><div id="sentence'+numSentences+'"><br><table cellspacing="5">' + tokenRow + posRow + '</table></div></li>')
   tokPositions = getTokenPositions(numSentences)
   calculatedDeps = calcDeps(what.deps, tokPositions)
   sentWidth = Math.max.apply(null, tokPositions.map((p) -> p.left + p.width))
@@ -111,6 +111,16 @@ handleMsg = (data) ->
 host = "http://localhost:8888"
 
 debug = (msg) -> jq("#debug").html(msg)
+
+sample = () ->
+  client = new XMLHttpRequest()
+  client.open("GET", host + '/sample/', false)
+  client.setRequestHeader("Content-Type", "text/plain")
+  client.send('')
+  if (client.status == 200)
+    handleMsg(client.responseText)
+  else
+    alert('Non 200 server response.')
 
 send = (msg) ->
   client = new XMLHttpRequest()
@@ -139,3 +149,5 @@ jq("#tooglr").click (e) ->
   e.preventDefault()
   toggleConnection()
   false
+
+sample()
