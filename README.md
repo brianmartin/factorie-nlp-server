@@ -4,8 +4,7 @@ This project provides NLP functions (currently part-of-speech tagging and
 dependency parsing via a REST API). It also includes a demonstration page which
 draws the arcs of the dependency parse.
 
-![](doc/screenshot.png)
-
+![](/factorie-nlp-server/master/doc/screenshot.png)
 Running the REST Server
 ================
 
